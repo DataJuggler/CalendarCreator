@@ -53,8 +53,8 @@
             CreateCalendarButton.ButtonText = "Create Calendar";
             CreateCalendarButton.FlatStyle = FlatStyle.Flat;
             CreateCalendarButton.ForeColor = Color.LemonChiffon;
-            CreateCalendarButton.Location = new Point(641, 262);
-            CreateCalendarButton.Margin = new Padding(4);
+            CreateCalendarButton.Location = new Point(780, 262);
+            CreateCalendarButton.Margin = new Padding(4, 4, 4, 4);
             CreateCalendarButton.Name = "CreateCalendarButton";
             CreateCalendarButton.Size = new Size(179, 53);
             CreateCalendarButton.TabIndex = 0;
@@ -87,7 +87,7 @@
             FolderPicker.OpenCallback = null;
             FolderPicker.ScrollBars = ScrollBars.None;
             FolderPicker.SelectedPath = null;
-            FolderPicker.Size = new Size(712, 32);
+            FolderPicker.Size = new Size(935, 32);
             FolderPicker.StartPath = null;
             FolderPicker.TabIndex = 1;
             FolderPicker.TextBoxBottomMargin = 0;
@@ -113,7 +113,7 @@
             MonthPicker.LabelTopMargin = 0;
             MonthPicker.LabelWidth = 112;
             MonthPicker.List = null;
-            MonthPicker.Location = new Point(24, 287);
+            MonthPicker.Location = new Point(51, 287);
             MonthPicker.Name = "MonthPicker";
             MonthPicker.SelectedIndex = -1;
             MonthPicker.SelectedIndexListener = null;
@@ -137,7 +137,7 @@
             YearControl.LabelText = "Year:";
             YearControl.LabelTopMargin = 0;
             YearControl.LabelWidth = 140;
-            YearControl.Location = new Point(329, 287);
+            YearControl.Location = new Point(440, 287);
             YearControl.MultiLine = false;
             YearControl.Name = "YearControl";
             YearControl.OnTextChangedListener = null;
@@ -156,7 +156,7 @@
             // 
             Graph.Location = new Point(24, 754);
             Graph.Name = "Graph";
-            Graph.Size = new Size(815, 23);
+            Graph.Size = new Size(955, 23);
             Graph.TabIndex = 4;
             Graph.Visible = false;
             // 
@@ -166,7 +166,7 @@
             StatusLabel.ForeColor = Color.LemonChiffon;
             StatusLabel.Location = new Point(24, 728);
             StatusLabel.Name = "StatusLabel";
-            StatusLabel.Size = new Size(832, 23);
+            StatusLabel.Size = new Size(955, 23);
             StatusLabel.TabIndex = 5;
             StatusLabel.Text = "Status:";
             // 
@@ -174,7 +174,7 @@
             // 
             Canvas.BackgroundImage = Properties.Resources.Blank;
             Canvas.BackgroundImageLayout = ImageLayout.Stretch;
-            Canvas.Location = new Point(121, 380);
+            Canvas.Location = new Point(237, 383);
             Canvas.Name = "Canvas";
             Canvas.Size = new Size(560, 320);
             Canvas.TabIndex = 6;
@@ -225,7 +225,7 @@
             BackgroundImagePicker.OpenCallback = null;
             BackgroundImagePicker.ScrollBars = ScrollBars.None;
             BackgroundImagePicker.SelectedPath = null;
-            BackgroundImagePicker.Size = new Size(712, 32);
+            BackgroundImagePicker.Size = new Size(935, 32);
             BackgroundImagePicker.StartPath = null;
             BackgroundImagePicker.TabIndex = 8;
             BackgroundImagePicker.TextBoxBottomMargin = 0;
@@ -261,7 +261,7 @@
             HeaderIimagePicker.OpenCallback = null;
             HeaderIimagePicker.ScrollBars = ScrollBars.None;
             HeaderIimagePicker.SelectedPath = null;
-            HeaderIimagePicker.Size = new Size(712, 32);
+            HeaderIimagePicker.Size = new Size(935, 32);
             HeaderIimagePicker.StartPath = null;
             HeaderIimagePicker.TabIndex = 9;
             HeaderIimagePicker.TextBoxBottomMargin = 0;
@@ -275,7 +275,7 @@
             // 
             InfoLabel.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             InfoLabel.ForeColor = Color.LemonChiffon;
-            InfoLabel.Location = new Point(279, 103);
+            InfoLabel.Location = new Point(408, 103);
             InfoLabel.Name = "InfoLabel";
             InfoLabel.Size = new Size(167, 16);
             InfoLabel.TabIndex = 10;
@@ -286,7 +286,7 @@
             // 
             InfoLabel2.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             InfoLabel2.ForeColor = Color.LemonChiffon;
-            InfoLabel2.Location = new Point(279, 157);
+            InfoLabel2.Location = new Point(408, 157);
             InfoLabel2.Name = "InfoLabel2";
             InfoLabel2.Size = new Size(167, 16);
             InfoLabel2.TabIndex = 11;
@@ -309,7 +309,7 @@
             BaseColor.LabelTopMargin = 0;
             BaseColor.LabelWidth = 112;
             BaseColor.List = null;
-            BaseColor.Location = new Point(24, 231);
+            BaseColor.Location = new Point(51, 231);
             BaseColor.Name = "BaseColor";
             BaseColor.SelectedIndex = -1;
             BaseColor.SelectedIndexListener = null;
@@ -325,8 +325,8 @@
             HiddenButton.ButtonText = "Hidden";
             HiddenButton.FlatStyle = FlatStyle.Flat;
             HiddenButton.ForeColor = Color.LemonChiffon;
-            HiddenButton.Location = new Point(-641, 345);
-            HiddenButton.Margin = new Padding(4);
+            HiddenButton.Location = new Point(-641, 346);
+            HiddenButton.Margin = new Padding(4, 4, 4, 4);
             HiddenButton.Name = "HiddenButton";
             HiddenButton.Size = new Size(179, 53);
             HiddenButton.TabIndex = 14;
@@ -348,7 +348,7 @@
             HeaderColor.LabelTopMargin = 0;
             HeaderColor.LabelWidth = 140;
             HeaderColor.List = null;
-            HeaderColor.Location = new Point(324, 231);
+            HeaderColor.Location = new Point(435, 231);
             HeaderColor.Name = "HeaderColor";
             HeaderColor.SelectedIndex = -1;
             HeaderColor.SelectedIndexListener = null;
@@ -362,7 +362,7 @@
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.Black;
-            ClientSize = new Size(868, 798);
+            ClientSize = new Size(1003, 798);
             Controls.Add(HeaderColor);
             Controls.Add(HiddenButton);
             Controls.Add(BaseColor);
