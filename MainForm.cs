@@ -187,22 +187,26 @@ namespace CalendarCreator
                 // initial value
                 bool isValid = true;
 
-                // if the Output Folder does not exist
-                if (!FolderPicker.HasText)
+                // if checked
+                if (SaveToDiskCheckBox.Checked)
                 {
-                    // not valid
-                    isValid = false;
-
-                    // Display a message
-                    DisplayStatus("You must pick an output folder to continue.", Color.Firebrick);
-                }
-                else
-                {
-                    // if the directory doesn't exist
-                    if (!Directory.Exists(FolderPicker.Text))
+                    // if the Output Folder does not exist
+                    if (!FolderPicker.HasText)
                     {
+                        // not valid
+                        isValid = false;
+
                         // Display a message
-                        DisplayStatus("The output folder does not exist.", Color.Firebrick);
+                        DisplayStatus("You must pick an output folder to continue.", Color.Firebrick);
+                    }
+                    else
+                    {
+                        // if the directory doesn't exist
+                        if (!Directory.Exists(FolderPicker.Text))
+                        {
+                            // Display a message
+                            DisplayStatus("The output folder does not exist.", Color.Firebrick);
+                        }
                     }
                 }
 
