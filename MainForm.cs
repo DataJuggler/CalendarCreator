@@ -8,6 +8,8 @@ using DataJuggler.Win.Controls;
 using DataJuggler.Win.Controls.Interfaces;
 using DataJuggler.UltimateHelper;
 using System.Data;
+using System.Drawing.Text;
+using System.Windows.Forms;
 
 #endregion
 
@@ -52,14 +54,14 @@ namespace CalendarCreator
                 Refresh();
                 Application.DoEvents();
 
+                // local
+                bool abort = false;
+
                 // validate
                 if (IsValid())
                 {
                     // Reload 
                     PixelDatabase = PixelDatabaseLoader.LoadPixelDatabase(Properties.Resources.Blank, null);
-
-                    // Load the second image
-                    PixelDatabase pixelDatabase2 = PixelDatabaseLoader.LoadPixelDatabase(Properties.Resources.Maroon, null);
 
                     // Get the month
                     MonthEnum month = (MonthEnum) (MonthPicker.SelectedIndex + 1);
@@ -86,23 +88,78 @@ namespace CalendarCreator
                     // Load the PixelDatabase
                     PixelDatabase blank = PixelDatabaseLoader.LoadPixelDatabase(BackgroundImagePicker.Text, null);
 
+                    // if not the right size
+                    if ((blank.Width != 1120) || (blank.Height != 740))
+                    {
+                        // bail
+                        abort = true;
+
+                        // Display a message
+                        DisplayStatus("The Background Image must be 1120 x 740.", Color.Firebrick);
+                    }
+
                     // Load the PixelDatabase
                     PixelDatabase header = PixelDatabaseLoader.LoadPixelDatabase(HeaderIimagePicker.Text, null);
 
-                    // Get the base color
-                    Color baseColor = Color.FromName(BaseColor.ComboBoxText);
+                    // if not the right size
+                    if ((header.Width != 1120) || (header.Height != 80))
+                    {
+                        // bail
+                        abort = true;
 
-                    // Get the header color
-                    Color headerColor = Color.FromName(HeaderColor.ComboBoxText);
+                        // Display a message
+                        DisplayStatus("The Header Image must be 1120 x 80.", Color.Firebrick);
+                    }
 
-                    // Create the Calendar
-                    PixelDatabase = PixelDatabase.CreateCalendar(blank.DirectBitmap.Bitmap, header.DirectBitmap.Bitmap, UpdateCallback, month, year, SaveToDiskCheckBox.Checked, fileName, baseColor, headerColor);
+                    // only used if text is entered
+                    PixelDatabase dayRowDatabase = null;
 
-                    // Draw the Calendar
-                    Canvas.BackgroundImage = PixelDatabase.DirectBitmap.Bitmap;
+                    if (DayRowImage.HasText)
+                    {
+                        // Load the day row image
+                        dayRowDatabase = PixelDatabaseLoader.LoadPixelDatabase(DayRowImage.Text, null);
+                    }
 
-                    // Hide
-                    Graph.Visible = false;
+                    // if continue
+                    if (!abort)
+                    {
+                        // Get the base color
+                        Color baseColor = Color.FromName(BaseColorComboBox.ComboBoxText);
+
+                        // Get the header color
+                        Color headerColor = Color.FromName(HeaderColorComboBox.ComboBoxText);
+
+                        // Set the baseFontSize
+                        float baseFontSize = (float) NumericHelper.ParseInteger(BaseFontSizeControl.ComboBoxText, 0, 0);
+                        float headerFontSize = (float) NumericHelper.ParseInteger(HeaderFontSizeControl.ComboBoxText, 0, 0);
+
+                        // Create the Fonts
+                        Font baseFont = new Font(BaseFontComboBox.ComboBoxText, baseFontSize);
+                        Font headerFont = new Font(HeaderFontComboBox.ComboBoxText, headerFontSize);
+
+                        // if Checked
+                        if (BoldCheckBox.Checked)
+                        {
+                            // Use Bold
+                            baseFont = new Font(BaseFontComboBox.ComboBoxText, baseFontSize, FontStyle.Bold);
+                        }
+
+                        // if Checked
+                        if (HeaderBoldCheckBox.Checked)
+                        {
+                            // Use Bold
+                            headerFont = new Font(HeaderFontComboBox.ComboBoxText, headerFontSize, FontStyle.Bold);
+                        }
+
+                        // Create the Calendar
+                        PixelDatabase = PixelDatabase.CreateCalendar(blank.DirectBitmap.Bitmap, header.DirectBitmap.Bitmap, UpdateCallback, month, year, SaveToDiskCheckBox.Checked, fileName, baseColor, headerColor, baseFont, headerFont, dayRowDatabase);
+
+                        // Draw the Calendar
+                        Canvas.BackgroundImage = PixelDatabase.DirectBitmap.Bitmap;
+
+                        // Hide
+                        Graph.Visible = false;
+                    }
                 }
             }
             #endregion
@@ -169,12 +226,62 @@ namespace CalendarCreator
                 SaveToDiskCheckBox.Checked = true;
 
                 // Load the Colors
-                BaseColor.LoadItems(typeof(KnownColor));
-                HeaderColor.LoadItems(typeof(KnownColor));
+                BaseColorComboBox.LoadItems(typeof(KnownColor));
+                HeaderColorComboBox.LoadItems(typeof(KnownColor));
 
                 // Select Black
-                BaseColor.SelectedIndex = BaseColor.FindItemIndexByValue("Black");            
-                HeaderColor.SelectedIndex = BaseColor.FindItemIndexByValue("Black");
+                BaseColorComboBox.SelectedIndex = BaseColorComboBox.FindItemIndexByValue("Black");            
+                HeaderColorComboBox.SelectedIndex = BaseColorComboBox.FindItemIndexByValue("Black");
+
+                // Load each font installed
+                using(InstalledFontCollection instealledFonts = new InstalledFontCollection())
+                {  
+                    foreach(FontFamily font in instealledFonts.Families)
+                    {  
+                        if ((font.IsStyleAvailable(FontStyle.Bold)) && (font.IsStyleAvailable(FontStyle.Regular)))
+                        {
+                            // Add this font
+                            BaseFontComboBox.Items.Add(font.Name);
+                            HeaderFontComboBox.Items.Add(font.Name);
+                        }
+                    }  
+                }
+
+                // Add the font sizes
+                BaseFontSizeControl.Items.Add("12");
+                BaseFontSizeControl.Items.Add("14");
+                BaseFontSizeControl.Items.Add("16");
+                BaseFontSizeControl.Items.Add("18");
+                BaseFontSizeControl.Items.Add("20");
+                BaseFontSizeControl.Items.Add("24");
+                BaseFontSizeControl.Items.Add("28");
+                BaseFontSizeControl.Items.Add("32");
+                BaseFontSizeControl.Items.Add("36");
+                BaseFontSizeControl.Items.Add("40");
+                BaseFontSizeControl.Items.Add("44");
+                BaseFontSizeControl.Items.Add("48");
+                BaseFontSizeControl.Items.Add("60");
+
+                // Select 28
+                BaseFontSizeControl.SelectedIndex = BaseFontSizeControl.FindItemIndexByValue("28");
+
+                // Load Each Size Again
+                HeaderFontSizeControl.Items.Add("12");
+                HeaderFontSizeControl.Items.Add("14");
+                HeaderFontSizeControl.Items.Add("16");
+                HeaderFontSizeControl.Items.Add("18");
+                HeaderFontSizeControl.Items.Add("20");
+                HeaderFontSizeControl.Items.Add("24");
+                HeaderFontSizeControl.Items.Add("28");
+                HeaderFontSizeControl.Items.Add("32");
+                HeaderFontSizeControl.Items.Add("36");
+                HeaderFontSizeControl.Items.Add("40");
+                HeaderFontSizeControl.Items.Add("44");
+                HeaderFontSizeControl.Items.Add("48");
+                HeaderFontSizeControl.Items.Add("60");
+
+                // Select 36
+                HeaderFontSizeControl.SelectedIndex = HeaderFontSizeControl.FindItemIndexByValue("36");
             }
             #endregion
 
